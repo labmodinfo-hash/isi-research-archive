@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Институт социальной динамики — Экспертная площадка</title>
+    <meta name="description" content="Независимый научно-дискуссионный портал по социологии управления и социологии коммуникаций.">
+    <style>
+        :root {
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #1e3a8a;
+            --accent-hover: #1d4ed8;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Шапка */
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--accent);
+            letter-spacing: -0.01em;
+            text-decoration: none;
+        }
+
+        .logo span {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            margin-left: 24px;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a.nav-archive {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Кнопка-телефон в шапке */
+        .phone-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background-color: #eff6ff;
+            color: var(--accent);
+            border: 1px solid #dbeafe;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 7px 14px;
+            border-radius: 999px;
+            white-space: nowrap;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+        }
+
+        .phone-pill:hover {
+            background-color: var(--accent);
+            color: #ffffff;
+            border-color: var(--accent);
+        }
+
+        .phone-pill svg { flex-shrink: 0; }
+
+        /* Первый экран */
+        .hero {
+            padding: 72px 0 56px;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: #dbeafe;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 999px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.35rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 720px;
+            margin-bottom: 32px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--accent);
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 12px 26px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 12px 26px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn svg, .btn-outline svg { flex-shrink: 0; }
+
+        /* Секции */
+        section {
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 1.55rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .section-lead {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            max-width: 700px;
+        }
+
+        /* Карточки направлений */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.96rem;
+        }
+
+        .card ul {
+            margin-top: 14px;
+            padding-left: 18px;
+            color: var(--text-secondary);
+            font-size: 0.94rem;
+        }
+
+        .card li {
+            margin-bottom: 6px;
+        }
+
+        /* Карточка-ссылка на архив */
+        .archive-card {
+            display: block;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            text-decoration: none;
+            color: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+        }
+
+        .archive-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.07);
+            transform: translateY(-2px);
+        }
+
+        .archive-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .archive-card p {
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+            margin-bottom: 18px;
+            max-width: 680px;
+        }
+
+        .archive-card .arrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.95rem;
+            transition: gap 0.2s;
+        }
+
+        .archive-card:hover .arrow { gap: 10px; }
+
+        /* Блок контактов */
+        .contact-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+
+        .contact-info p {
+            color: var(--text-secondary);
+            max-width: 520px;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .email-link {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 2px solid #bfdbfe;
+            padding-bottom: 2px;
+        }
+
+        .email-link:hover {
+            border-color: var(--accent);
+        }
+
+        .phone-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 2px solid #bfdbfe;
+            padding-bottom: 2px;
+        }
+
+        .phone-link:hover { border-color: var(--accent); }
+
+        .phone-link svg { flex-shrink: 0; }
+
+        .contact-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background-color: var(--accent);
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .contact-btn:hover { background-color: var(--accent-hover); }
+
+        .contact-btn--ghost {
+            background-color: transparent;
+            color: var(--accent);
+            border: 1px solid var(--border);
+        }
+
+        .contact-btn--ghost:hover {
+            border-color: var(--accent);
+            background-color: #eff6ff;
+        }
+
+        .contact-btn svg { flex-shrink: 0; }
+
+        /* Подвал */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 0;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+        }
+
+        .footer-disclaimer {
+            margin-top: 8px;
+            font-size: 0.82rem;
+            color: #64748b;
+        }
+
+        .footer-contacts {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 20px;
+            font-size: 0.88rem;
+        }
+
+        .footer-contacts a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-contacts a:hover { text-decoration: underline; }
+
+        @media (max-width: 640px) {
+            h1 { font-size: 1.85rem; }
+            nav { display: none; }
+            .hero { padding: 48px 0 36px; }
+            .contact-box { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <a href="#" class="logo">
+                Институт социальной динамики
+                <span>Независимая исследовательская инициатива · isi.org.ru</span>
+            </a>
+            <div class="header-right">
+                <nav>
+                    <a href="#about">О площадке</a>
+                    <a href="#directions">Направления</a>
+                    <a href="https://isi.org.ru/papers.html" class="nav-archive">Архив исследований</a>
+                    <a href="https://isi.org.ru/works.html">Список трудов</a>
+                    <a href="#contact">Дискуссия и контакты</a>
+                </nav>
+                <a href="tel:+79992430043" class="phone-pill" aria-label="Позвонить: +7 999 243 00 43">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                    +7 999 243 00 43
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="hero">
+            <span class="badge">Открытый научно-дискуссионный портал</span>
+            <h1>Исследование управленческих практик и современных коммуникаций</h1>
+            <p>
+                Независимая экспертная площадка для обмена мнениями, публикации аналитических заметок и обсуждения актуальных трансформаций в социологии управления и социологии коммуникаций.
+            </p>
+            <div class="hero-actions">
+                <a href="#contact" class="btn">Предложить тему для обсуждения</a>
+                <a href="https://isi.org.ru/papers.html" class="btn-outline">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                    </svg>
+                    Открыть архив публикаций
+                </a>
+                <a href="https://isi.org.ru/works.html" class="btn-outline">Список трудов</a>
+            </div>
+        </div>
+
+        <section id="about">
+            <h2>Миссия и формат работы</h2>
+            <p class="section-lead">
+                Проект объединяет исследователей, преподавателей и практиков, заинтересованных в осмыслении того, как меняются механизмы принятия решений и информационные потоки в современном обществе. Мы открыты к академическому диалогу, совместным публикациям и междисциплинарным дискуссиям.
+            </p>
+        </section>
+
+        <!-- НОВАЯ СЕКЦИЯ: Научный архив -->
+        <section id="archive">
+            <h2>Научный архив</h2>
+            <p class="section-lead">
+                Собрание научных статей, аналитических докладов и методических разработок института. Все материалы доступны для ознакомления и цитирования.
+            </p>
+            <a href="https://isi.org.ru/papers.html" class="archive-card">
+                <h3>Архив исследований и публикаций</h3>
+                <p>
+                    Публикации по социологии управления, социологии коммуникаций,
+                    медиа и общественному мнению, а также по методологии и методам
+                    социологических исследований. Поиск по названию, году и журналу,
+                    фильтр по направлениям и возможность скопировать готовую цитату.
+                </p>
+                <span class="arrow">
+                    Перейти в архив
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </span>
+            </a>
+        </section>
+
+        <section id="directions">
+            <h2>Ключевые направления дискуссий</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Социология управления</h3>
+                    <p>Анализ трансформации социальных институтов, организационной культуры и моделей принятия управленческих решений.</p>
+                    <ul>
+                        <li>Социальная эффективность управления</li>
+                        <li>Адаптация организаций к кризисным изменениям</li>
+                        <li>Доверие и лидерство в современных структурах</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Социология коммуникаций</h3>
+                    <p>Изучение информационного пространства, медиапотребления и влияния цифровой среды на общественное мнение.</p>
+                    <ul>
+                        <li>Трансформация публичной сферы и новых медиа</li>
+                        <li>Коммуникативные барьеры и информационные риски</li>
+                        <li>Динамика общественного дискурса в цифровой среде</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="contact-box">
+                <div class="contact-info">
+                    <h3>Присоединиться к диалогу</h3>
+                    <p>
+                        Если вы хотите поделиться исследовательской гипотезой, предложить статью для обсуждения или обсудить научное сотрудничество, позвоните или напишите нам.
+                    </p>
+                    <div class="contact-actions">
+                        <a href="tel:+79992430043" class="contact-btn">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                            Позвонить
+                        </a>
+                        <a href="mailto:science@isi.org.ru" class="contact-btn contact-btn--ghost">
+                            Написать на почту
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-links">
+                    <a href="tel:+79992430043" class="phone-link" aria-label="Позвонить: +7 999 243 00 43">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        +7 999 243 00 43
+                    </a>
+                    <a href="mailto:science@isi.org.ru" class="email-link">science@isi.org.ru</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div>&copy; 2026 Институт социальной динамики (isi.org.ru)</div>
+            <div class="footer-contacts">
+                <a href="tel:+79992430043">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                    +7 999 243 00 43
+                </a>
+                <a href="mailto:science@isi.org.ru">science@isi.org.ru</a>
+            </div>
+            <div class="footer-disclaimer">
+                Проект носит характер независимой научной и просветительской инициативы по обмену мнениями и не является образовательным учреждением или зарегистрированным юридическим лицом.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Архив исследований — Институт социальной динамики (isi.org.ru)</title>
+    <meta name="description" content="Репозиторий научных публикаций и аналитических материалов по социологии управления, социологии коммуникаций, медиа и методологии.">
+    <link rel="canonical" href="https://isi.org.ru/papers.html">
+    <style>
+        :root {
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --accent: #1e3a8a;
+            --accent-light: #eff6ff;
+            --accent-hover: #1d4ed8;
+            --border: #e2e8f0;
+            --success: #059669;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .logo span {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+        .header-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.92rem;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+        .header-links a:hover { color: var(--accent); }
+
+        .hero { padding: 48px 0 32px; }
+        .badge {
+            display: inline-block;
+            background-color: #dbeafe;
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 999px;
+            margin-bottom: 14px;
+        }
+        h1 {
+            font-size: 2rem;
+            line-height: 1.25;
+            font-weight: 800;
+            margin-bottom: 14px;
+            letter-spacing: -0.02em;
+        }
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 760px;
+        }
+
+        .controls {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+        }
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-box:focus { border-color: var(--accent); }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .filter-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+        .filter-btn {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .filter-btn.active {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            color: #ffffff;
+        }
+        .counter {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .papers-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 56px;
+        }
+        .paper-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+        }
+        .paper-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            font-size: 0.82rem;
+            margin-bottom: 10px;
+        }
+        .paper-year {
+            font-weight: 700;
+            color: var(--accent);
+            background-color: var(--accent-light);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .paper-category {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        .paper-title {
+            font-size: 1.18rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.35;
+        }
+        .paper-source {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+        .paper-abstract {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 18px;
+        }
+        .paper-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+        .btn-pdf {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--accent);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        .btn-pdf:hover { background-color: var(--accent-hover); }
+
+        .btn-cite {
+            background-color: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-cite:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-cite.copied {
+            border-color: var(--success);
+            color: var(--success);
+            background-color: #ecfdf5;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 48px 20px;
+            background-color: var(--bg-card);
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            display: none;
+            margin-bottom: 56px;
+        }
+        .empty-state p { margin-bottom: 14px; }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 0;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            background-color: var(--bg-card);
+        }
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        .footer-inner > div { flex: 1 1 320px; }
+        .footer-disclaimer {
+            margin-top: 12px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 640px) {
+            h1 { font-size: 1.6rem; }
+            .paper-card { padding: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <a href="https://isi.org.ru/" class="logo">
+                Институт социальной динамики
+                <span>Архив исследований и публикаций · isi.org.ru</span>
+            </a>
+            <div class="header-links">
+                <a href="https://isi.org.ru/">На главную</a>
+                <a href="https://isi.org.ru/works.html">Список трудов</a>
+                <a href="mailto:science@isi.org.ru">science@isi.org.ru</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="hero">
+            <span class="badge">Научный репозиторий</span>
+            <h1>Исследования по социологии управления, коммуникаций и методологии</h1>
+            <p>
+                Собрание научных статей, аналитических докладов и методических разработок,
+                подготовленных в рамках исследовательской программы Института социальной
+                динамики. Все материалы доступны для ознакомления и цитирования.
+            </p>
+        </div>
+
+        <div class="controls">
+            <input type="text" id="searchInput" class="search-box"
+                   placeholder="Поиск по названию, ключевым словам, году или журналу...">
+            <div class="filters">
+                <div class="filter-buttons" id="filterButtons">
+                    <button class="filter-btn active" data-category="all">Все работы</button>
+                    <button class="filter-btn" data-category="management">Социология управления</button>
+                    <button class="filter-btn" data-category="communications">Социология коммуникаций</button>
+                    <button class="filter-btn" data-category="media">Медиа и общественное мнение</button>
+                    <button class="filter-btn" data-category="methodology">Методология и методы</button>
+                </div>
+                <div class="counter" id="resultsCounter">Показано работ: 0 из 0</div>
+            </div>
+        </div>
+
+        <div class="papers-list" id="papersList"></div>
+
+        <div class="empty-state" id="emptyState">
+            <p>По вашему запросу публикаций не найдено. Попробуйте изменить ключевое слово или сбросить фильтр.</p>
+            <button class="btn-cite" id="resetBtn" type="button">Сбросить фильтры</button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <div>
+                    <strong>© 2026 Институт социальной динамики (isi.org.ru)</strong>
+                    <div class="footer-disclaimer">
+                        Почта для запросов и сотрудничества:
+                        <a href="mailto:science@isi.org.ru">science@isi.org.ru</a>
+                    </div>
+                </div>
+                <div class="footer-disclaimer">
+                    Материалы представлены в рамках независимой научно-исследовательской
+                    инициативы. При использовании и цитировании просьба указывать выходные
+                    данные первоисточника.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // =====================================================================
+        // БАЗА ПУБЛИКАЦИЙ
+        // =====================================================================
+        const papersData = [
+            {
+                year: 2026,
+                category: "media",
+                categoryName: "Медиа и общественное мнение",
+                title: "Семиотические коды и визуальный регистр современной экранной анимации: сравнительный мультимодальный анализ",
+                source: "Рубцова М.В. // Международный научно-исследовательский журнал. 2026. № 10 (172). DOI: 10.60797/IRJ.2026.172.5.",
+                abstract: "Цель исследования — выявить и систематизировать семиотические коды, формирующие визуальный регистр современной японской экранной анимации. Материалом послужили четыре культовых аниме-сериала: «Евангелион», «Эксперименты Лейн», «Монстр» и «Атака титанов». Разработана авторская кодировочная схема из шести групп кодов. Сделан вывод о том, что визуальный регистр современного аниме функционирует как открытая, самоописывающая семиотическая система.",
+                pdfUrl: "/papers/rubtsova-2026-semiotic-codes.pdf",
+                citation: "Рубцова М.В. Семиотические коды и визуальный регистр современной экранной анимации: сравнительный мультимодальный анализ // Международный научно-исследовательский журнал. 2026. № 10 (172). DOI: 10.60797/IRJ.2026.172.5."
+            },
+            {
+                year: 2026,
+                category: "methodology",
+                categoryName: "Методология и методы",
+                title: "Репрезентация аномального: разработка и апробация мультимодального контент-анализа",
+                source: "Рубцова М.В. // Российский лингвистический бюллетень. 2026. № 9 (81). DOI: 10.60797/RULB.2026.81.3.",
+                abstract: "Рассматривается трансформация образа аномального в трёх аниме-сериалах пост-2010 года. Эмпирическую базу составили тридцать ключевых сцен. Оценка проводилась по пяти порядковым параметрам. Межкодерская надёжность (κ = 0,73) свидетельствует о существенной согласованности. Выделены три сценария гуманизации монстра.",
+                pdfUrl: "/papers/rubtsova-2026-representing-anomalous.pdf",
+                citation: "Рубцова М.В. Репрезентация аномального: разработка и апробация мультимодального контент-анализа // Российский лингвистический бюллетень. 2026. № 9 (81). DOI: 10.60797/RULB.2026.81.3."
+            },
+            {
+                year: 2026,
+                category: "communications",
+                categoryName: "Социология коммуникаций",
+                title: "Анализ коммуникативных моделей субъектности в массовой культуре",
+                source: "Рубцова М.В. // Российский лингвистический бюллетень. 2026. № 6 (78). DOI: 10.60797/RULB.2026.78.19.",
+                abstract: "Цель статьи — выявить и типологизировать основные коммуникативные модели субъектности в аниме «Монстр» на основе аналитической психологии К.Г. Юнга и подхода Хаяо Каваи. Выявлены три устойчивые модели: «кармическая диада», «расщеплённый субъект» и «диалогический ответ».",
+                pdfUrl: "/papers/rubtsova-2026-communicative-models.pdf",
+                citation: "Рубцова М.В. Анализ коммуникативных моделей субъектности в массовой культуре // Российский лингвистический бюллетень. 2026. № 6 (78). DOI: 10.60797/RULB.2026.78.19."
+            },
+            {
+                year: 2026,
+                category: "management",
+                categoryName: "Социология управления",
+                title: "Понятие управляемого пространства в социологии управления",
+                source: "Рубцова А.В., Рубцова М.В. // Современная наука: актуальные проблемы теории и практики. Серия: Экономика и право. 2026. № 3. С. 148-150.",
+                abstract: "Раскрывается понятие управляемого пространства в социологии управления как особой конфигурации социальных взаимодействий. На основе идей Э. Гофмана, П. Штомпки и Д. Рисмана обосновывается связь между личными управляемыми пространствами и макросоциальными формами управления.",
+                pdfUrl: "/papers/rubtsova-2026-manageable-space.pdf",
+                citation: "Рубцова А.В., Рубцова М.В. Понятие управляемого пространства в социологии управления // Современная наука: актуальные проблемы теории и практики. Серия: Экономика и право. 2026. № 3. С. 148-150."
+            },
+            {
+                year: 2026,
+                category: "communications",
+                categoryName: "Социология коммуникаций",
+                title: "Женская тема как тема патриотизма и любви к родине в платоновском диалоге «Менексен»",
+                source: "Рубцова А.В., Рубцова М.В., Павенков В.Г. // Казанская наука. 2026. № 6. С. 715-717.",
+                abstract: "На материале диалога Платона «Менексен» исследуется специфика представления темы патриотизма и любви к родине через призму «женской оптики». Демонстрируется, как «женские» темы расширяются до масштабов гражданской и политической философии.",
+                pdfUrl: "/papers/rubtsova-2026-female-theme.pdf",
+                citation: "Рубцова А.В., Рубцова М.В., Павенков В.Г. Женская тема как тема патриотизма и любви к родине в платоновском диалоге «Менексен» // Казанская наука. 2026. № 6. С. 715-717."
+            },
+            {
+                year: 2026,
+                category: "media",
+                categoryName: "Медиа и общественное мнение",
+                title: "Онтологический поворот в нарратологии: концепция автономности мира в теории М. Дж. П. Вульфа",
+                source: "Рубцова А.В., Рубцова М.В., Мартьянова Н.А. // Казанская наука. 2026. № 3. С. 616-618.",
+                abstract: "Рассматривается концепция воображаемых миров Марка Дж. П. Вульфа в контексте междисциплинарного «онтологического поворота» начала XXI века. Анализируется сдвиг парадигмы от классического нарратоцентризма к онтологическому подходу.",
+                pdfUrl: "/papers/rubtsova-2026-ontological-turn.pdf",
+                citation: "Рубцова А.В., Рубцова М.В., Мартьянова Н.А. Онтологический поворот в нарратологии: концепция автономности мира в теории М. Дж. П. Вульфа // Казанская наука. 2026. № 3. С. 616-618."
+            },
+            {
+                year: 2026,
+                category: "management",
+                categoryName: "Социология управления",
+                title: "Обобществление и социализация собственности как тенденции развития отношений присвоения",
+                source: "Малинина Т.Б., Тарандо Е.Е., Липатова Л.Н., Рубцова М.В. // Теория и практика общественного развития. 2026. № 2 (214). С. 22-30.",
+                abstract: "Анализируется сходство и различие процессов обобществления собственности и ее социализации. Обосновывается действительность общественной собственности. Делается вывод о том, что государственная собственность является единственной формой, способной обеспечить приоритет общественных интересов.",
+                pdfUrl: "/papers/malinina-2026-property.pdf",
+                citation: "Малинина Т.Б., Тарандо Е.Е., Липатова Л.Н., Рубцова М.В. Обобществление и социализация собственности как тенденции развития отношений присвоения // Теория и практика общественного развития. 2026. № 2 (214). С. 22-30."
+            },
+            {
+                year: 2026,
+                category: "management",
+                categoryName: "Социология управления",
+                title: "Секция кафедры социального управления и планирования СПбГУ на X Санкт-Петербургском международном форуме труда",
+                source: "Тарандо Е.Е., Рубцова М.В., Рассказов С.В., Меньшикова Г.А. // Социологический журнал. 2026. Т. 32. № 2. С. 187-197.",
+                abstract: "Представлен обзор работы научной секции «Социальное пространство труда и управления трудом: образование, занятость, человеческий капитал» в рамках X Санкт-Петербургского международного форума труда. Подводятся итоги научной дискуссии.",
+                pdfUrl: "/papers/tarando-2026-sociological-journal.pdf",
+                citation: "Тарандо Е.Е., Рубцова М.В., Рассказов С.В., Меньшикова Г.А. Секция кафедры социального управления и планирования СПбГУ на X Санкт-Петербургском международном форуме труда // Социологический журнал. 2026. Т. 32. № 2. С. 187-197."
+            },
+            {
+                year: 2026,
+                category: "management",
+                categoryName: "Социология управления",
+                title: "Нейроуправление как управленческая и социальная технология",
+                source: "Рубцова М.В. // Социология новой современности: проблемы, теория, методы. 2026. С. 455-457.",
+                abstract: "Предпринята попытка анализа нейроуправления как одного из направлений развития теории и практики управления в недалёком будущем. Рассматривается как пессимистический образ будущего, так и возможные положительные последствия внедрения нейроуправления.",
+                pdfUrl: "/papers/rubtsova-2026-neuromanagement.pdf",
+                citation: "Рубцова М.В. Нейроуправление как управленческая и социальная технология // Социология новой современности: проблемы, теория, методы. 2026. С. 455-457."
+            },
+            {
+                year: 2016,
+                category: "methodology",
+                categoryName: "Методология и методы",
+                title: "«Доверие»: концептуализация и операционализация понятия в корпусной лингвистике",
+                source: "Рубцова М.В., Васильева Е.А. // Социологические исследования. 2016. № 1. С. 58–65.",
+                abstract: "Предложена методика исследования институционально-лексического контекста на основе корпусной лингвистики. Это позволяет концептуализировать и операционализировать понятие «доверие». Выявлено, что категория «доверие» используется в контексте политических институтов.",
+                pdfUrl: "/papers/rubtsova-2016-trust.pdf",
+                citation: "Рубцова М.В., Васильева Е.А. «Доверие»: концептуализация и операционализация понятия в корпусной лингвистике // Социологические исследования. 2016. № 1. С. 58–65."
+            }
+        ];
+
+        // =====================================================================
+        // ЛОГИКА ПОИСКА, ФИЛЬТРОВ И КОПИРОВАНИЯ
+        // =====================================================================
+        const papersList     = document.getElementById('papersList');
+        const searchInput    = document.getElementById('searchInput');
+        const filterButtons  = document.querySelectorAll('.filter-btn');
+        const resultsCounter = document.getElementById('resultsCounter');
+        const emptyState     = document.getElementById('emptyState');
+        const resetBtn       = document.getElementById('resetBtn');
+
+        let currentCategory = 'all';
+        let currentQuery    = '';
+
+        function renderPapers() {
+            const q = currentQuery.toLowerCase();
+            const filtered = papersData.filter(paper => {
+                const matchesCategory =
+                    currentCategory === 'all' || paper.category === currentCategory;
+                const haystack =
+                    (paper.title + ' ' + paper.abstract + ' ' + paper.source + ' ' + paper.year)
+                        .toLowerCase();
+                return matchesCategory && haystack.includes(q);
+            });
+
+            papersList.innerHTML = '';
+            resultsCounter.textContent =
+                'Показано работ: ' + filtered.length + ' из ' + papersData.length;
+
+            if (filtered.length === 0) {
+                emptyState.style.display = 'block';
+                return;
+            }
+            emptyState.style.display = 'none';
+
+            filtered.forEach(paper => {
+                const card = document.createElement('article');
+                card.className = 'paper-card';
+
+                let actionsHtml = '';
+                if (paper.pdfUrl) {
+                    actionsHtml += '<a href="' + paper.pdfUrl + '" target="_blank" rel="noopener" class="btn-pdf">Открыть PDF</a>';
+                }
+                actionsHtml += '<button class="btn-cite" type="button">Цитировать</button>';
+
+                card.innerHTML =
+                    '<div class="paper-meta">' +
+                        '<span class="paper-year">' + paper.year + '</span>' +
+                        '<span class="paper-category">' + paper.categoryName + '</span>' +
+                    '</div>' +
+                    '<h2 class="paper-title">' + paper.title + '</h2>' +
+                    '<div class="paper-source">' + paper.source + '</div>' +
+                    '<p class="paper-abstract">' + paper.abstract + '</p>' +
+                    '<div class="paper-actions">' + actionsHtml + '</div>';
+
+                const citeBtn = card.querySelector('.btn-cite');
+                citeBtn.addEventListener('click', function () {
+                    copyCitation(citeBtn, paper.citation);
+                });
+
+                papersList.appendChild(card);
+            });
+        }
+
+        function copyCitation(button, text) {
+            const done = () => {
+                const original = button.textContent;
+                button.textContent = 'Ссылка скопирована ✓';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = original;
+                    button.classList.remove('copied');
+                }, 2000);
+            };
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text)
+                    .then(done)
+                    .catch(() => fallbackCopy(text, done));
+            } else {
+                fallbackCopy(text, done);
+            }
+        }
+
+        function fallbackCopy(text, done) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.top = '-1000px';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                done();
+            } catch (e) {
+                alert('Не удалось скопировать. Скопируйте вручную:\n\n' + text);
+            }
+            document.body.removeChild(ta);
+        }
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.getAttribute('data-category');
+                renderPapers();
+            });
+        });
+
+        searchInput.addEventListener('input', e => {
+            currentQuery = e.target.value.trim();
+            renderPapers();
+        });
+
+        resetBtn.addEventListener('click', () => {
+            currentQuery = '';
+            currentCategory = 'all';
+            searchInput.value = '';
+            filterButtons.forEach(b =>
+                b.classList.toggle('active', b.getAttribute('data-category') === 'all')
+            );
+            renderPapers();
+        });
+
+        renderPapers();
+    </script>
+</body>
+</html>
